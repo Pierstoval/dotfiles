@@ -1,0 +1,5 @@
+.idea
+*.php~
+thumbs.db
+.DS_STORE
+

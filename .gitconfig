@@ -1,0 +1,83 @@
+
+# You can also add the following aliases to your bash file,
+# either ~/.bashrc or ~/.bash_profile depending on your envionment
+# (for Windows, you'll have to create ".bat" or ".cmd" files in your %PATH%)
+
+# alias gst="git st"
+# alias gl="git log -n 1"
+
+[color]
+    # Enable colors for all output from git
+    # Useful when you have to view diffs or status
+    ui = always
+
+[core]
+    # Automatically adds the user-related .gitignore file globally
+    # Remember to add default files to the global .gitignore !
+    # Some like thumbs.db (win), .DS_STORE (Mac) or IDE likes: .nbproject, .idea, .xcodeproj, etc.
+    excludesfile = ~/.gitignore
+
+    # This will warn you about trailing spaces at end of lines
+    whitespace = trailing-space
+
+    # Force the index to use "LF" line endings.
+    autocrlf = input
+
+    # Change the line ending style for the working directory
+    eol = lf
+
+    # Forces the Git pager to quit when the datas are not higher than the terminal.
+    # For small logs, it will simply display it in the terminal,
+    #   and for high logs, it will send it to `less` and use its console pagination system.
+    # This prevents wrong `less` implementations to override this cool behavior
+    pager = less -X -F
+
+[alias]
+    # Shortcuts for some actions
+    co = checkout
+    cm = commit
+    l = log
+    st = status
+
+    # Tools to save time 
+    f = fetch --all            # Fetches all your repositories
+    fp = fetch --all --prune   # Fetches all your repositories and removes refs that do not exist anymore remotely
+    b = branch -a --column     # List all branches in columns for more readability. Git 1.7.11 at least.
+    bl = branch -av            # List all branches and show their HEAD pointer
+    r = remote -v              # List all remotes and show their urls.
+    undo = reset --soft HEAD~1 # Removes the last commit, but don't erase all modifications
+
+    # List all tags with their author and date of release (better than "git tag -l")
+    # Two different methods because the rendered tags are not the same.
+    # This one shows the refs as they are stored in Git
+    tagrefs = for-each-ref 'refs/tags' --sort='taggerdate' --format='%(tag) - %(taggerdate) - %(taggername)'
+    # This one shows the commits that are linked with a tag, so the result is not exactly the same
+    taglist = log --color=always --pretty=format:'%Cred%h%Creset %C(yellow)%D%Creset - %C(green)%cd%Creset %s %C(bold blue)<%an>%Creset' --simplify-by-decoration
+
+    # Shows all commits formatted like this:
+    # [0a1b2c3] Commit Title  Commit Description
+    # This is very useful if you want to create nice changelogs in your releases, like in Github
+    log-commits = log --pretty=format:'[%h] %s'
+
+    # Shows a beautiful tree of the current branch
+    tree = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s'
+
+    # A beautiful graph to show the repository tree with all remotes and branches
+    graph = log --all --color=always --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+
+    # A nice tool to generate a changelog between versions.
+    # Like this, for example:
+    # $ git changelog v0.1.2..master
+    # Will generate a markdown-compatible changelog of all commits from v0.1.2 to master.
+    # @link https://coderwall.com/p/ch-wew/git-alias-to-generate-the-changelog
+    changelog = "!f() { r=${1:-`git describe --tags --abbrev=0`..HEAD}; echo Changelog for $r; git log --reverse --no-merges --format='* %s' $r; }; f"
+
+    # Sometimes, when you do lots of rebasing/squashing, your git directory becomes very heavy.
+    # With this command, git automatically removes any orphan blob in the .git/ directory.
+    # Tested and approved! For a very often rebased repo, turned it from 4.8GB to 350MB... 😉
+    gcall = -c gc.reflogExpire=0 -c gc.reflogExpireUnreachable=0 -c gc.rerereresolved=0 -c gc.rerereunresolved=0 -c gc.pruneExpire=now gc --aggressive
+
+[user]
+    email = pierstoval@gmail.com
+    name = Alex Rock Ancelet
+
