@@ -1,6 +1,7 @@
 
 # Command aliases
 alias l='ls -lah --color=always --group-directories-first'
+alias cdr='cd -P' # Runs "cd" with real paths instead of symlinked paths
 
 # Git
 alias gd='git diff'
