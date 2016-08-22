@@ -1,4 +1,16 @@
 
+# If not in interactive mode, don't do anything.
+[[ "$-" != *i* ]] && return
+
+# Use case-insensitive filename globbing
+shopt -s nocaseglob
+
+# Make bash append rather than overwrite the history on disk
+shopt -s histappend
+
+# Add bash completion if exists
+[[ -f /etc/bash_completion ]] && . /etc/bash_completion
+
 # Command aliases
 alias l='ls -lah --color=always --group-directories-first'
 alias cdr='cd -P' # Runs "cd" with real paths instead of symlinked paths
@@ -30,4 +42,3 @@ then
     PS1=$PS1'$(__git_ps1)\[\e[0m\] ' # Git branch in teal/light blue
 fi
 PS1=$PS1'$ ' # Final dollar sign and space
-
