@@ -2,4 +2,4 @@
 *.php~
 thumbs.db
 .DS_STORE
-
+*.yml~
