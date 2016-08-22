@@ -13,12 +13,21 @@ alias gl='git log'
 alias sf='php bin/console'
 alias sf2='php app/console'
 
-# Git branch in bash if completion available
+# Bash prompt look & colors
+PS1=''
+PS1=$PS1'\[\033[0;32m\]' # Green
+PS1=$PS1'\u'             # Username
+PS1=$PS1'\[\e[0m\]'      # Reset color
+PS1=$PS1' '
+PS1=$PS1'\[\033[0;33m\]' # Brown/orange
+PS1=$PS1'\w'             # Current directory
+PS1=$PS1'\[\e[0m\]'      # Reset color
+PS1=$PS1' '
 if [ -f "/etc/bash_completion.d/git-prompt" ]
 then
+    # Git branch in bash if completion available
     source /etc/bash_completion.d/git-prompt
-    PS1=\[\033[0;32m\]\u\[\e[0m\]:\[\033[0;33m\]\w\[\033[0;36m\]$(__git_ps1)\[\e[0m\] $ 
-else
-    PS1=\[\033[0;32m\]\u\[\e[0m\]:\[\033[0;33m\]\w\[\033[0;36m\]\[\e[0m\] $ 
+    PS1=$PS1'$(__git_ps1)\[\e[0m\] ' # Git branch in teal/light blue
 fi
+PS1=$PS1'$ ' # Final dollar sign and space
 
