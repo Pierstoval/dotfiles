@@ -9,6 +9,9 @@ echo "This will override all softwares you intend to install,"
 echo "bashrc, vimrc, git config files, etc., so be sure of"
 echo "what you are doing!"
 
+# Get base user
+BASE_USER=`whoami`
+
 # Match case insensitive
 shopt -s nocasematch
 
@@ -33,7 +36,7 @@ files=( '.bashrc' '.gitconfig' '.gitignore' '.inputrc' '.tmux.conf' '.vimrc' )
 for FILE in "${files[@]}"
 do
     echo "Downloading file ${FILE}"
-    wget --quiet -O "${HOME}/${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/${FILE}"
+    wget --quiet -O "${HOME}/${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/${FILE}" > /dev/null 2>>install.log
     if [ -f "${HOME}/${FILE}" ];
     then
        echo "> Ok !"
@@ -55,13 +58,13 @@ fi
 echo "------------------------------"
 echo "Installing composer"
 
-${SUDO} php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-${SUDO} php -r "if (hash_file('SHA384', 'composer-setup.php') === 'e115a8dc7871f15d853148a7fbac7da27d6c0030b848d9b3dc09e2a0388afed865e6a3d6b3c0fad45c48e2b5fc1196ae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-${SUDO} php composer-setup.php
-${SUDO} php -r "unlink('composer-setup.php');"
-${SUDO} mv composer.phar /usr/local/bin/composer
-${SUDO} chmod a+x /usr/local/bin/composer
-${SUDO} chown `whoami` /usr/local/bin/composer
+$SUDO php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+$SUDO php -r "if (hash_file('SHA384', 'composer-setup.php') === 'e115a8dc7871f15d853148a7fbac7da27d6c0030b848d9b3dc09e2a0388afed865e6a3d6b3c0fad45c48e2b5fc1196ae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+$SUDO php composer-setup.php > /dev/null 2>>install.log
+$SUDO rm composer-setup.php
+$SUDO cp composer.phar /usr/local/bin/composer
+$SUDO chmod a+x /usr/local/bin/composer
+$SUDO chown $BASE_USER /usr/local/bin/composer
 composer --version
 
 
@@ -69,9 +72,9 @@ composer --version
 echo "------------------------------"
 echo "Installing Symfony installer"
 
-${SUDO} curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony
-${SUDO} chmod a+x /usr/local/bin/symfony
-${SUDO} chown `whoami` /usr/local/bin/symfony
+$SUDO curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony --silent > /dev/null 2>>install.log
+$SUDO chmod a+x /usr/local/bin/symfony
+$SUDO chown $BASE_USER /usr/local/bin/symfony
 symfony --version
 
 
@@ -79,10 +82,9 @@ symfony --version
 echo "------------------------------"
 echo "Installing phpunit"
 
-wget https://phar.phpunit.de/phpunit.phar
-${SUDO} mv phpunit.phar /usr/local/bin/phpunit
-${SUDO} chmod a+x /usr/local/bin/phpunit
-${SUDO} chown `whoami` /usr/local/bin/phpunit
+$SUDO wget --quiet -O "/usr/local/bin/phpunit" "https://phar.phpunit.de/phpunit.phar" > /dev/null 2>>install.log
+$SUDO chmod a+x /usr/local/bin/phpunit
+$SUDO chown $BASE_USER /usr/local/bin/phpunit
 phpunit --version
 
 
@@ -90,10 +92,10 @@ phpunit --version
 echo "------------------------------"
 echo "Installing Box-project"
 
-curl -LSs https://box-project.github.io/box2/installer.php | php
-${SUDO} mv box.phar /usr/local/bin/box
-${SUDO} chmod a+x /usr/local/bin/box
-${SUDO} chown `whoami` /usr/local/bin/box
+curl -LSs https://box-project.github.io/box2/installer.php --silent | php > /dev/null 2>>install.log
+$SUDO cp box.phar /usr/local/bin/box
+$SUDO chmod a+x /usr/local/bin/box
+$SUDO chown $BASE_USER /usr/local/bin/box
 box --version
 
 
@@ -101,11 +103,11 @@ box --version
 echo "------------------------------"
 echo "Compiling and installing Behat"
 
-composer create-project behat/behat behat_install
+/usr/local/bin/composer create-project behat/behat behat_install
 box build -c behat_install/box.json
-${SUDO} mv behat.phar /usr/local/bin/behat
-${SUDO} chmod a+x /usr/local/bin/behat
-${SUDO} chown `whoami` /usr/local/bin/behat
+$SUDO cp behat.phar /usr/local/bin/behat
+$SUDO chmod a+x /usr/local/bin/behat
+$SUDO chown $BASE_USER /usr/local/bin/behat
 rm -rf behat_install
 
 
