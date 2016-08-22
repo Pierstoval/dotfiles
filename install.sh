@@ -1,5 +1,29 @@
 #!/bin/bash
 
+type curl >/dev/null 2>&1 || { echo >&2 "You need 'curl', please install it before."; exit 127; }
+type wget >/dev/null 2>&1 || { echo >&2 "You need 'wget', please install it before."; exit 127; }
+type php >/dev/null 2>&1  || { echo >&2 "You need 'php', please install it before."; exit 127; }
+
+echo "WARNING!"
+echo "This will override all softwares you intend to install,"
+echo "bashrc, vimrc, git config files, etc., so be sure of"
+echo "what you are doing!"
+
+# Match case insensitive
+shopt -s nocasematch
+
+# Read answer
+read -rsp $'Continue? [Y/n] > ' -n1 key
+
+if [[ ${key} =~ "y" ]]
+then
+    echo "Processing!"
+else
+    echo "Ok, bye then!"
+    exit 1
+fi
+
+
 echo "Installing config files"
 
 echo "Home dir is ${HOME}"
@@ -17,7 +41,6 @@ do
        echo "ERR > File ${FILE} could not be downloaded..."
     fi
 done
-
 
 # Check if sudo exists
 SUDO=''
