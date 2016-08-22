@@ -6,6 +6,10 @@
 # alias gst="git st"
 # alias gl="git log -n 1"
 
+[user]
+    email = pierstoval@gmail.com
+    name = Alex Rock Ancelet
+
 [color]
     # Enable colors for all output from git
     # Useful when you have to view diffs or status
@@ -39,7 +43,7 @@
     l = log
     st = status
 
-    # Tools to save time 
+    # Tools to save time
     f = fetch --all            # Fetches all your repositories
     fp = fetch --all --prune   # Fetches all your repositories and removes refs that do not exist anymore remotely
     b = branch -a --column     # List all branches in columns for more readability. Git 1.7.11 at least.
@@ -76,8 +80,3 @@
     # With this command, git automatically removes any orphan blob in the .git/ directory.
     # Tested and approved! For a very often rebased repo, turned it from 4.8GB to 350MB... 😉
     gcall = -c gc.reflogExpire=0 -c gc.reflogExpireUnreachable=0 -c gc.rerereresolved=0 -c gc.rerereunresolved=0 -c gc.pruneExpire=now gc --aggressive
-
-[user]
-    email = pierstoval@gmail.com
-    name = Alex Rock Ancelet
-
