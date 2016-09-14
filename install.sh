@@ -6,7 +6,7 @@ type php >/dev/null 2>&1  || { echo >&2 "You need 'php', please install it befor
 
 echo "WARNING!"
 echo "This will override all softwares you intend to install,"
-echo "bashrc, vimrc, git config files, etc., so be sure of"
+echo "bash_aliases, vimrc, git config files, etc., so be sure of"
 echo "what you are doing!"
 
 # Get base user
@@ -31,7 +31,7 @@ echo "Installing config files"
 
 echo "Home dir is ${HOME}"
 
-files=( '.bashrc' '.gitconfig' '.gitignore' '.inputrc' '.tmux.conf' '.vimrc' )
+files=( '.bash_aliases' '.gitconfig' '.gitignore' '.inputrc' '.tmux.conf' '.vimrc' )
 
 for FILE in "${files[@]}"
 do
