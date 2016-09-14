@@ -1,3 +1,7 @@
 $include /etc/inputrc
 
 set completion-ignore-case On
+
+# Makke sure we don't use only the same line
+set horizontal-scroll-mode Off
+
