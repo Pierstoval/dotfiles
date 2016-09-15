@@ -1,6 +1,9 @@
 
 # If not in interactive mode, don't do anything.
-[[ "$-" != *i* ]] && return
+case "$-" in
+    *i*)    echo "Shell seems interactive" ;;
+    *)      echo "Shell does not seem to be interactive." && return ;;
+esac
 
 # Use case-insensitive filename globbing
 shopt -s nocaseglob
@@ -45,7 +48,7 @@ __prompt_command() {
     fi
 
     # Dollar (or sharp) will change color depending on last exit code
-    if [ $EXIT != 0 ]
+    if [ $exit_code != "0" ]
     then
         PS1=$PS1'\[\033[0;31m\]' # Red
     else
