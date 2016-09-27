@@ -11,6 +11,12 @@ shopt -s nocaseglob
 # Make bash append rather than overwrite the history on disk
 shopt -s histappend
 
+# Update window size after each command
+shopt -s checkwinsize
+
+# Don't put duplicate lines or empty lines in history
+HISTCONTROL=ignoreboth
+
 # Add bash completion if exists
 [[ -f /etc/bash_completion ]] && . /etc/bash_completion
 
