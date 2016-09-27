@@ -1,8 +1,8 @@
 
 # If not in interactive mode, don't do anything.
-case "$-" in
-    *i*)    echo "Shell seems interactive" ;;
-    *)      echo "Shell does not seem to be interactive." && return ;;
+case $- in
+    *i*) ;;
+      *) return;;
 esac
 
 # Use case-insensitive filename globbing
