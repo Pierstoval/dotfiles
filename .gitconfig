@@ -39,6 +39,7 @@
 [alias]
     # Shortcuts for some actions
     co = checkout
+    cob = checkout -b
     cm = commit
     l = log
     st = status
