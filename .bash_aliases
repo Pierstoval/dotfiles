@@ -30,6 +30,10 @@ alias gd='git diff'
 alias gst='git status'
 alias gl='git log'
 
+# Symfony aliases
+alias sf='php bin/console'
+alias sf2='php app/console'
+
 PROMPT_COMMAND=__prompt_command
 
 __prompt_command() {
