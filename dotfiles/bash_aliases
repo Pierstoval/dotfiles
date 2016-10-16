@@ -1,4 +1,6 @@
 
+# Using .bash_aliases allows keeping default .bashrc or .bash_profile files.
+
 # If not in interactive mode, don't do anything.
 case $- in
     *i*) ;;
@@ -69,3 +71,8 @@ __prompt_command() {
     PS1=$PS1'\[\e[0m\]' # Reset color
     PS1=$PS1' '         # Space
 }
+
+# Load custom bin directory because it contains cool stuff & personal binaries
+
+export PATH=$PATH:'$HOME/bin/'
+
