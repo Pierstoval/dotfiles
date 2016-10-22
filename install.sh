@@ -23,9 +23,14 @@ else
 fi
 
 
-echo "Installing config files"
 
 echo "Home dir is ${HOME}"
+
+
+
+
+echo "------------------------------"
+echo "Installing config files"
 
 files=( 'bash_aliases' 'gitconfig' 'gitignore' 'inputrc' 'tmux.conf' 'vimrc' )
 
@@ -54,15 +59,23 @@ echo "Making sure that config files are loaded on shell startup"
 
 
 echo "------------------------------"
-echo "Installing binaries"
+echo "Installing binaries (some may need updates)"
 
-if [[ ! -d ~/bin ]]
-then
-    mkdir ~/bin -p
-fi
+files=( 'behat' 'box' 'composer' 'docker-compose' 'php-cs-fixer' 'phpunit' 'symfony' )
 
-cp bin/* ~/bin/ 
+for FILE in "${files[@]}"
+do
+    echo -e "Downloading binary ${FILE}\c"
+    wget --quiet -O "${HOME}/${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/bin/${FILE}" > /dev/null 2>>install.log
+    if [ -f "${HOME}/bin/${FILE}" ];
+    then
+       echo " > Ok !"
+    else
+       echo "\nERR > Binary ${FILE} could not be downloaded..."
+    fi
 
+    chmod a+x ${HOME}/bin/${FILE}
+done
 
 
 
