@@ -13,5 +13,9 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+" Color theme
 colors torte
+
+" Enable highlight for search terms
+set hlsearch
 
