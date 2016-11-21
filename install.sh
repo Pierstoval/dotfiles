@@ -34,7 +34,7 @@ echo "Installing config files"
 
 files=( 'bash_aliases' 'gitconfig' 'gitignore' 'inputrc' 'tmux.conf' 'vimrc' )
 
-for FILE in "${files[@]}"
+for FILE in ${files[@]}
 do
     echo -e "Downloading file .${FILE}\c"
     wget --quiet -O "${HOME}/.${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/dotfiles/${FILE}" > /dev/null 2>>install.log
@@ -42,7 +42,8 @@ do
     then
        echo " > Ok !"
     else
-       echo "\nERR > File .${FILE} could not be downloaded..."
+       echo ""
+       echo "ERR > File .${FILE} could not be downloaded..."
     fi
 done
 
@@ -61,12 +62,15 @@ echo "Making sure that config files are loaded on shell startup"
 echo "------------------------------"
 echo "Installing binaries (some may need updates)"
 
+# Create $HOME/bin if not exists
+[[ -d "${HOME}/bin" ]] || mkdir "${HOME}/bin"
+
 files=( 'behat' 'box' 'composer' 'docker-compose' 'php-cs-fixer' 'phpunit' 'symfony' 'touchpad-switcher.sh' )
 
 for FILE in "${files[@]}"
 do
     echo -e "Downloading binary ${FILE}\c"
-    wget --quiet -O "${HOME}/${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/bin/${FILE}" > /dev/null 2>>install.log
+    wget --quiet -O "${HOME}/bin/${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/bin/${FILE}" > /dev/null 2>>install.log
     if [ -f "${HOME}/bin/${FILE}" ];
     then
        echo " > Ok !"
