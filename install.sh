@@ -61,7 +61,7 @@ echo "Making sure that config files are loaded on shell startup"
 echo "------------------------------"
 echo "Installing binaries (some may need updates)"
 
-files=( 'behat' 'box' 'composer' 'docker-compose' 'php-cs-fixer' 'phpunit' 'symfony' )
+files=( 'behat' 'box' 'composer' 'docker-compose' 'php-cs-fixer' 'phpunit' 'symfony' 'touchpad-switcher.sh' )
 
 for FILE in "${files[@]}"
 do
