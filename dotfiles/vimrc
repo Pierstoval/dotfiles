@@ -16,6 +16,9 @@ set expandtab
 " Color theme
 colors torte
 
+" Force background to be transparent
+hi Normal ctermbg=none
+
 " Enable highlight for search terms
 set hlsearch
 
