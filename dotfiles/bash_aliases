@@ -35,6 +35,15 @@ alias gl='git log'
 alias sf='php bin/console'
 alias sf2='php app/console'
 
+# Webserver alias
+if [[ -d "~/www" ]]; then
+    alias ww="cd ~/www"
+elif [[ -d "/var/www" ]]; then
+    alias ww="cd /var/www"
+else
+    alias ww='echo "No \"www\" directory found"'
+fi
+
 PROMPT_COMMAND=__prompt_command
 
 __prompt_command() {
