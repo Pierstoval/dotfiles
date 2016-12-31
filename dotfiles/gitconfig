@@ -9,6 +9,10 @@
 [user]
     email = pierstoval@gmail.com
     name = Alex Rock Ancelet
+    signingkey = XXXXXXXXXXXXXXXXXX
+
+[commit]
+    gpgsign = true
 
 [color]
     # Enable colors for all output from git
