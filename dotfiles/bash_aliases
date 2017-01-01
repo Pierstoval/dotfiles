@@ -87,3 +87,8 @@ export PATH=$PATH:'$HOME/bin/'
 [[ $LANG ]] || export LANG=fr_FR.utf8
 [[ $LC_ALL ]] || export LC_ALL=$LANG
 
+# Start tmux if login shell + tmux exists + not running tmux inside tmux
+if command -v tmux>/dev/null; then
+  [[ ! $TERM =~ screen ]] && [ -z $TMUX ] && exec tmux
+fi
+
