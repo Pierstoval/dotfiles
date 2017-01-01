@@ -36,18 +36,17 @@ files=( 'bash_aliases' 'gitconfig' 'gitignore' 'inputrc' 'tmux.conf' 'vimrc' )
 
 for FILE in ${files[@]}
 do
-    echo -e "Downloading file .${FILE}\c"
+    echo -e "Downloading file .${FILE}"
 
     # Read answer
-    read -rsp $"Continue? [Y/n] > \c" -n1 key
+    read -rsp $" Continue? [y/N] > " -n1 key
 
     if [[ ${key} =~ "y" ]]; then
         wget --quiet -O "${HOME}/.${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/dotfiles/${FILE}" > /dev/null 2>>install.log
         if [ -f "${HOME}/.${FILE}" ];
         then
-           echo " > Ok !"
+           echo " Ok !"
         else
-           echo ""
            echo "ERR > File .${FILE} could not be downloaded..."
         fi
     else
@@ -75,20 +74,25 @@ echo "Installing binaries (some may need updates)"
 
 files=( 'behat' 'box' 'composer' 'docker-compose' 'php-cs-fixer' 'phpunit' 'symfony' 'touchpad-switcher.sh' )
 
-for FILE in "${files[@]}"
-do
-    echo -e "Downloading binary ${FILE}\c"
-    wget --quiet -O "${HOME}/bin/${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/bin/${FILE}" > /dev/null 2>>install.log
-    if [ -f "${HOME}/bin/${FILE}" ];
-    then
-       echo " > Ok !"
-    else
-       echo "\nERR > Binary ${FILE} could not be downloaded..."
-    fi
+read -rsp $" Download binaries? [Y/n] > " -n1 key
 
-    chmod a+x ${HOME}/bin/${FILE}
-done
+if [[ ${key} =~ "y" ]]; then
+    for FILE in "${files[@]}"
+    do
+        echo -e "Downloading binary ${FILE}\c"
+        wget --quiet -O "${HOME}/bin/${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/bin/${FILE}" > /dev/null 2>>install.log
+        if [ -f "${HOME}/bin/${FILE}" ];
+        then
+           echo " > Ok !"
+        else
+           echo "\nERR > Binary ${FILE} could not be downloaded..."
+        fi
 
+        chmod a+x ${HOME}/bin/${FILE}
+    done
+else
+    echo "Skip"
+fi
 
 
 
