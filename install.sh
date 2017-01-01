@@ -37,13 +37,21 @@ files=( 'bash_aliases' 'gitconfig' 'gitignore' 'inputrc' 'tmux.conf' 'vimrc' )
 for FILE in ${files[@]}
 do
     echo -e "Downloading file .${FILE}\c"
-    wget --quiet -O "${HOME}/.${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/dotfiles/${FILE}" > /dev/null 2>>install.log
-    if [ -f "${HOME}/.${FILE}" ];
-    then
-       echo " > Ok !"
+
+    # Read answer
+    read -rsp $"Continue? [Y/n] > \c" -n1 key
+
+    if [[ ${key} =~ "y" ]]; then
+        wget --quiet -O "${HOME}/.${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/dotfiles/${FILE}" > /dev/null 2>>install.log
+        if [ -f "${HOME}/.${FILE}" ];
+        then
+           echo " > Ok !"
+        else
+           echo ""
+           echo "ERR > File .${FILE} could not be downloaded..."
+        fi
     else
-       echo ""
-       echo "ERR > File .${FILE} could not be downloaded..."
+        echo "Skip"
     fi
 done
 
