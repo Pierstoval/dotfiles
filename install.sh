@@ -1,12 +1,15 @@
 #!/bin/bash
 
 echo "WARNING!"
-echo "This will override all softwares you intend to install,"
+echo "This can override all softwares you intend to install,"
 echo "bash_aliases, vimrc, git config files, etc., so be sure of"
 echo "what you are doing!"
 
 # Get base user
 BASE_USER=`whoami`
+
+BASE_URL="https://raw.githubusercontent.com/Pierstoval/dotfiles/master"
+
 
 # Match case insensitive
 shopt -s nocasematch
@@ -22,13 +25,8 @@ else
     exit 1
 fi
 
-
-
 echo "Home dir is ${HOME}"
-
-
-
-
+echo ""
 echo "------------------------------"
 echo "Installing config files"
 
@@ -42,7 +40,7 @@ do
     read -rsp $" Continue? [y/N] > " -n1 key
 
     if [[ ${key} =~ "y" ]]; then
-        wget --quiet -O "${HOME}/.${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/dotfiles/${FILE}" > /dev/null 2>>install.log
+        wget --quiet -O "${HOME}/.${FILE}" "${BASE_URL}/dotfiles/${FILE}" > /dev/null 2>>install.log
         if [ -f "${HOME}/.${FILE}" ];
         then
            echo " Ok !"
@@ -58,6 +56,10 @@ done
 echo "------------------------------"
 echo "Making sure that config files are loaded on shell startup"
 
+# Create bashrc if not exists
+[[ -f ~/.bashrc ]] || touch ~/.bashrc
+
+# Add source bash_aliases if not present in bashrc
 (cat ~/.bashrc | grep "bash_aliases") > /dev/null 2>&1 || echo "source ~/.bash_aliases" >> ~/.bashrc
 
 
@@ -80,7 +82,7 @@ if [[ ${key} =~ "y" ]]; then
     for FILE in "${files[@]}"
     do
         echo -e "Downloading binary ${FILE}\c"
-        wget --quiet -O "${HOME}/bin/${FILE}" "https://raw.githubusercontent.com/Pierstoval/dotfiles/master/bin/${FILE}" > /dev/null 2>>install.log
+        wget --quiet -O "${HOME}/bin/${FILE}" "${BASE_URL}/bin/${FILE}" > /dev/null 2>>install.log
         if [ -f "${HOME}/bin/${FILE}" ];
         then
            echo " > Ok !"
@@ -96,6 +98,29 @@ fi
 
 
 
+echo "Downloading other needed files"
+
+download_file() {
+    sourcefile=$1
+
+    if [[ ${key} =~ "y" ]]; then
+        for sourcefile in "${files[@]}"
+        do
+            echo -e "Downloading file ${sourcefile}\c"
+            sudo wget --quiet -O "${sourcefile}" "${BASE_URL}/${sourcefile}" > /dev/null 2>>install.log
+            if [ -f "${sourcefile}" ];
+            then
+               echo " > Ok !"
+            else
+               echo "\nERR > File ${sourcefile} could not be downloaded..."
+            fi
+        done
+    else
+        echo "Skip"
+    fi
+}
+
+download_file "/etc/dnsmasq.d/localhost.dev"
 
 echo "------------------------------"
 echo "Finished!"
