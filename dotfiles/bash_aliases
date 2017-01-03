@@ -81,7 +81,7 @@ __prompt_command() {
 }
 
 # Load custom bin directory because it contains cool stuff & personal binaries
-export PATH=$PATH:'$HOME/bin/'
+export PATH=$PATH:"${HOME}/bin/"
 
 # Change locale if needed
 [[ $LANG ]] || export LANG=fr_FR.utf8
