@@ -1,0 +1,2 @@
+@echo OFF
+git status %*
