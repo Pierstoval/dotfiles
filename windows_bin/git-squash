@@ -1,0 +1,114 @@
+#!/bin/bash
+# Author: Joel Nothman
+# Optimized by Pierstoval
+# Under BSD-2 license
+# See https://github.com/jnothman/git-squash
+# See https://github.com/Pierstoval/git-squash
+
+usage() {
+    echo ""
+    echo Usage: git squash '[-m <commit msg>] [-a|--append] [-f|--full] <base>'
+    echo "  -m <commit msg>   Used to provide a new message for the squashed commit"
+    echo "  -a                If specified, the commit msg will be followed by all squashed commits informations"
+    echo "  -f|--full         If '-a|--append' is specified, all the messages will contain more informations (author, date...)"
+    exit 1
+}
+
+unset base
+unset message
+unset append
+
+full=false
+base=""
+append=false
+appendMessage=""
+commitsCount=0
+message=""
+
+while [ -n "$1" ]
+do
+    case "$1" in
+        -h)
+            usage
+            ;;
+        -m)
+            shift
+            if [ -z "$1" ]
+            then
+                echo '-m requires an argument' >&2
+                usage
+            fi
+
+            if [ -n "$message" ]
+            then
+                message+=$'\n\n'"$1"
+            else
+                message="$1"
+            fi
+            ;;
+        -f|--full)
+            full=true
+            ;;
+        -a|--append-message)
+            append=true
+            ;;
+        *)
+            if [ -z "$base" ]
+            then
+                base="$1"
+            else
+                echo 'Multiple bases specified' >&2
+                usage
+            fi
+    esac
+    shift
+done
+if [ -z "$base" ]
+then
+    echo 'No base ref provided' >&2
+    usage
+fi
+
+if [ "$append" = true ]
+then
+    nl=$'\n'
+    commitsCount=`git rev-list ${base}..HEAD --count`
+    if [ "$commitsCount" -eq "0" ]
+    then
+        echo "No commit for base '$base'."
+        exit 1
+    fi
+    appendMessage+=$'\n'
+    appendMessage+=$'\n'
+    if [ "$full" = true ]
+    then
+        appendMessage+=`git log --pretty=format:"[%h] %ad - %cn <%ce>$nl%s$nl%b" -n${commitsCount}`
+    else
+        appendMessage+=`git log --pretty=format:"[%h] %s %b" -n${commitsCount}`
+    fi
+fi
+
+seq_ed="$(mktemp -t squash_edXXXXXX)" &&
+echo '#!'$(which bash)'
+    echo Squashing... >&2
+    tmp="$(mktemp -t squash_outXXXXXX)"
+    awk '"'"'NR != 1 { sub(/^pick/, "squash") } {print}'"'"' "$1" > "$tmp"
+    mv "$tmp" "$1"
+' > $seq_ed &&
+chmod +x "$seq_ed" &&
+
+echo 'Warning: Forgetting local history. To revert, use:
+  $ git reset --hard' $(git rev-parse --short HEAD) >&2
+
+if [ -n "$message" ]
+then
+    GIT_SEQUENCE_EDITOR=$seq_ed GIT_EDITOR=touch git rebase -i $base
+else
+    GIT_SEQUENCE_EDITOR=$seq_ed git rebase -i $base
+fi
+if [ -n "$message" ]
+then
+    echo 'Updating commit message' >&2
+    git commit --amend -m "$message$appendMessage" | head -n1
+fi
+rm -r "$seq_ed"

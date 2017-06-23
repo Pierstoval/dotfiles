@@ -1,3 +1,3 @@
 @echo OFF
 setlocal DISABLEDELAYEDEXPANSION
-php "%~dp0symfony" %*
+php "%~dp0sensiocloud" %*
