@@ -30,9 +30,16 @@ echo ""
 echo "------------------------------"
 echo "Installing config files"
 
-files=( 'bash_aliases' 'gitconfig' 'gitignore' 'inputrc' 'tmux.conf' 'vimrc' )
+files=(
+    'bash_aliases'
+    'gitconfig'
+    'gitignore'
+    'inputrc'
+    'tmux.conf'
+    'vimrc'
+)
 
-for FILE in ${files[@]}
+for FILE in "${files[@]}"
 do
     echo -e "Downloading file .${FILE}"
 
@@ -74,7 +81,21 @@ echo "Installing binaries (some may need updates)"
 # Create $HOME/bin if not exists
 [[ -d "${HOME}/bin" ]] || mkdir "${HOME}/bin"
 
-files=( 'behat' 'box' 'composer' 'docker-compose' 'php-cs-fixer' 'phpunit' 'symfony' 'touchpad-switcher.sh' )
+files=(
+    'aptupgrade'
+    'behat'
+    'box'
+    'composer'
+    'deprecation-detector'
+    'docker-compose'
+    'git-squash'
+    'melody'
+    'php-cs-fixer'
+    'phpunit'
+    'sensiocloud'
+    'symfony'
+    'touchpad-switcher.sh'
+)
 
 read -rsp $" Download binaries? [Y/n] > " -n1 key
 
@@ -102,12 +123,19 @@ echo "Downloading other needed files"
 
 download_file() {
     sourcefile=$1
+    destination=$2
 
     if [[ ${key} =~ "y" ]]; then
         for sourcefile in "${files[@]}"
         do
+            if [[ $destination == "" ]]; then
+                destination="${sourcefile}"
+            else
+                destination="${destination}/$(basename sourcefile)"
+            fi
+
             echo -e "Downloading file ${sourcefile}\c"
-            sudo wget --quiet -O "${sourcefile}" "${BASE_URL}/${sourcefile}" > /dev/null 2>>install.log
+            sudo wget --quiet -O "${destination}" "${BASE_URL}/${sourcefile}" > /dev/null 2>>install.log
             if [ -f "${sourcefile}" ];
             then
                echo " > Ok !"
@@ -121,6 +149,12 @@ download_file() {
 }
 
 download_file "/etc/dnsmasq.d/localhost.dev"
+
+php_conf_dir="$(php -i | grep 'Scan this dir for additional .ini files' | grep -oP '(?<=\=\>\s).*')"
+
+if [[ $php_conf_dir != "" ]]; then
+    download_file "/etc/php/99-custom.ini" $php_conf_dir
+fi
 
 echo "------------------------------"
 echo "Finished!"
