@@ -7,6 +7,9 @@ case $- in
       *) return;;
 esac
 
+export EDITOR=vim
+export MAILTO=pierstoval+prod@gmail.com
+
 # Use case-insensitive filename globbing
 shopt -s nocaseglob
 
