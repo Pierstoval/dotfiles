@@ -19,6 +19,10 @@
     # Useful when you have to view diffs or status
     ui = always
 
+[push]
+    # Avoid writing "-u" everytime you push, it will set the upstream if no refspec is given
+    default = current
+
 [core]
     # Automatically adds the user-related .gitignore file globally
     # Remember to add default files to the global .gitignore !
