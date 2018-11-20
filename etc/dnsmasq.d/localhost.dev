@@ -1,2 +1,0 @@
-# Everything pointing to *.dev will be resolved to localhost
-address=/dev/127.0.0.1

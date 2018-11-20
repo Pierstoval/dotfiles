@@ -1,0 +1,2 @@
+# Everything pointing to *.docker will be resolved to localhost
+address=/docker/127.0.0.1
