@@ -1,0 +1,11 @@
+#!/bin/sh
+# Generate changelog from git log
+# Usage: git-changelog [<start revision>]
+# Written by Mathias Lafeldt <mathias.lafeldt@gmail.com>
+# Coming from here: https://github.com/mlafeldt/dotfiles/blob/master/bin/git-changelog
+
+set -e
+
+r=${1:-`git describe --tags --abbrev=0`..HEAD}
+echo "Changelog for $r"
+git log --reverse --no-merges --format='* %s' $r

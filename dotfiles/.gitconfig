@@ -9,7 +9,10 @@
 [user]
     email = pierstoval@gmail.com
     name = Alex Rock Ancelet
-    signingkey = XXXXXXXXXXXXXXXXXX
+    signingkey = 88A74A3BC09636A2
+
+[tag]
+    gpgsign = true
 
 [commit]
     gpgsign = true
@@ -59,6 +62,7 @@
     bl = branch -av            # List all branches and show their HEAD pointer
     r = remote -v              # List all remotes and show their urls.
     undo = reset --soft HEAD~1 # Removes the last commit, but don't erase all modifications
+    rbc = rebase --continue    # Continue rebasing (mostly after fixing conflicts).
 
     # List all tags with their author and date of release (better than "git tag -l")
     # Two different methods because the rendered tags are not the same.
@@ -76,14 +80,7 @@
     tree = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s'
 
     # A beautiful graph to show the repository tree with all remotes and branches
-    graph = log --all --color=always --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-
-    # A nice tool to generate a changelog between versions.
-    # Like this, for example:
-    # $ git changelog v0.1.2..master
-    # Will generate a markdown-compatible changelog of all commits from v0.1.2 to master.
-    # @link https://coderwall.com/p/ch-wew/git-alias-to-generate-the-changelog
-    changelog = "!f() { r=${1:-`git describe --tags --abbrev=0`..HEAD}; echo Changelog for $r; git log --reverse --no-merges --format='* %s' $r; }; f"
+    graph = log --all --color=always --graph --pretty=format:'%Cred%h%Cgreen (%ci)%Creset -%C(yellow)%d%Creset %s  %C(bold blue)<%an>%Creset'
 
     # Sometimes, when you do lots of rebasing/squashing, your git directory becomes very heavy.
     # With this command, git automatically removes any orphan blob in the .git/ directory.

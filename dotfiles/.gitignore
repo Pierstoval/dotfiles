@@ -4,6 +4,7 @@
 
 # User-specific stuff
 .idea
+.svn
 
 # CMake
 cmake-build-debug/
