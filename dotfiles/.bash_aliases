@@ -41,9 +41,14 @@ alias gl='git log'
 # Copyright @jpauli for this trick 🐍
 alias genpw='_genpw() { len="${1:-36}"; tr -dc A-Za-z0-9_!? < /dev/urandom | head -c ${len} | xargs; }; _genpw'
 
+alias phpqa='mkdir -p $(pwd)/tmp-phpqa && docker run --init -it --rm -v $(pwd):/project -v $(pwd)/tmp-phpqa:/tmp -w /project jakzal/phpqa:alpine'
+
 # Symfony aliases
 alias sf='php bin/console'
 alias sf2='php app/console'
+
+# For Symfony CLI to be in the PATH by default.
+export PATH=$PATH:"${HOME}/.symfony/bin/"
 
 # Webserver alias
 if [[ -d "~/www" ]]; then

@@ -5,6 +5,11 @@
 # User-specific stuff
 .idea
 .svn
+.composer
+.php_cs.cache
+
+# Microsoft Office
+~$*
 
 # CMake
 cmake-build-debug/
