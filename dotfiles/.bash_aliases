@@ -34,6 +34,13 @@ alias gd='git diff'
 alias gst='git status'
 alias gl='git log'
 
+# Want to generate a password?
+# Example:
+#   $ genpw 8
+#   rF5ecY4G
+# Copyright @jpauli for this trick 🐍
+alias genpw='_genpw() { len="${1:-36}"; tr -dc A-Za-z0-9_!? < /dev/urandom | head -c ${len} | xargs; }; _genpw'
+
 # Symfony aliases
 alias sf='php bin/console'
 alias sf2='php app/console'
