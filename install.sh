@@ -23,7 +23,7 @@ mkdir -p ~/bin
 # Copy dotfiles
 cp -r ~/dotfiles/dotfiles/* ~/
 cp -r ~/dotfiles/bin/* ~/bin/
-cp -r ~/dotfiles/etc/* /etc/
+sudo cp -r ~/dotfiles/etc/* /etc/
 
 echo "------------------------------"
 echo "Finished!"
