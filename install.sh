@@ -21,7 +21,7 @@ mkdir -p ~/bin
 (cat ~/.bashrc | grep "bash_aliases") > /dev/null 2>&1 || echo "source ~/.bash_aliases" >> ~/.bashrc
 
 # Copy dotfiles
-cp -r ~/dotfiles/dotfiles/* ~/
+cp -r ~/dotfiles/dotfiles/.* ~/
 cp -r ~/dotfiles/bin/* ~/bin/
 sudo cp -r ~/dotfiles/etc/* /etc/
 
