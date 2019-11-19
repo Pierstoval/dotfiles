@@ -5,7 +5,8 @@ echo "This can (and WILL) override all softwares you intend to install,"
 echo "bash_aliases, vimrc, git config files, etc., so be sure of"
 echo "what you are doing!"
 
-if [[ $(which git) == "" ]];
+if [[ $(which git) == "" ]]
+then
     sudo apt install git
 fi
 
