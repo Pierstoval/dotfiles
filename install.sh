@@ -15,18 +15,15 @@ git clone git@github.com:Pierstoval/dotfiles.git ~/dotfiles
 mkdir -p ~/bin
 
 # Create bashrc if not exists
-[[ -f ~/.bashrc ]] || touch ~/.bashrc
+[[ -f ~/dotfiles/.bashrc ]] || touch ~/dotfiles/.bashrc
 
 # Add source bash_aliases if not present in bashrc
 (cat ~/.bashrc | grep "bash_aliases") > /dev/null 2>&1 || echo "source ~/.bash_aliases" >> ~/.bashrc
 
 # Copy dotfiles
-cp -r ~/dotfiles/* ~/
-cp -r ~/bin/* ~/bin/
-cp -r ~/etc/* /etc/
-
-# Install vim plugins
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+cp -r ~/dotfiles/dotfiles/* ~/
+cp -r ~/dotfiles/bin/* ~/bin/
+cp -r ~/dotfiles/etc/* /etc/
 
 echo "------------------------------"
 echo "Finished!"
