@@ -6,6 +6,9 @@
 # alias gst="git st"
 # alias gl="git log -n 1"
 
+[init]
+	defaultBranch = main
+
 [user]
     email = pierstoval@gmail.com
     name = Alex Rock Ancelet
