@@ -1,6 +1,6 @@
 
-# You can also add the following aliases to your bash file,
-# either ~/.bashrc or ~/.bash_profile depending on your envionment
+# You can also add the following aliases to your bash file
+# either ~/.bashrc, ~/.bash_aliases or ~/.bash_profile depending on your envionment
 # (for Windows, you'll have to create ".bat" or ".cmd" files in your %PATH%)
 
 # alias gst="git st"
@@ -57,15 +57,17 @@
     cm = commit
     l = log
     st = status
+    sw = switch                # Alternative to "checkout", Git 2.27+ needed
 
     # Tools to save time
-    f = fetch --all            # Fetches all your repositories
-    fp = fetch --all --prune   # Fetches all your repositories and removes refs that do not exist anymore remotely
+    f = fetch --all            # Fetches all your repositories.
+    fp = fetch --all --prune   # Fetches all your repositories and removes refs that do not exist anymore remotely.
     b = branch -a --column     # List all branches in columns for more readability. Git 1.7.11 at least.
-    bl = branch -av            # List all branches and show their HEAD pointer
+    bl = branch -av            # List all branches and show their HEAD pointer.
     r = remote -v              # List all remotes and show their urls.
-    undo = reset --soft HEAD~1 # Removes the last commit, but don't erase all modifications
+    undo = reset --soft HEAD~1 # Removes the last commit, but don't erase all modifications.
     rbc = rebase --continue    # Continue rebasing (mostly after fixing conflicts).
+    cmane = commit --amend --no-edit # Amend last commit, include current staged changes, and don't edit the commit message.
 
     # List all tags with their author and date of release (better than "git tag -l")
     # Two different methods because the rendered tags are not the same.
