@@ -51,6 +51,10 @@ alias dsf='docker-compose exec php bin/console'
 # For Symfony CLI to be in the PATH by default.
 export PATH=$PATH:"${HOME}/.symfony/bin/"
 
+# To be used within a WSL setup ONLY.
+# On native linux, you don't need that.
+# export DISPLAY="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`:0"
+
 # Webserver alias
 if [[ -d "~/www" ]]; then
     alias ww="cd ~/www"
