@@ -24,7 +24,7 @@ if %containerexists% == 1 (
 		--name=mysql ^
 		--env MYSQL_ROOT_PASSWORD=root ^
 		--publish 3316:3306 ^
-		--volume=%HOME%\mysql_data\:/var/lib/mysql ^
+		--volume=%HOME%\mysql_data:/var/lib/mysql ^
 		mysql:5.7
 ) else (
 	echo Container exists.
