@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Check if the "mysql" container is running
+number_of_running_containers=$(docker ps --filter "name=mysql" | grep -w "mysql" | wc -l)
+
+if [ $number_of_running_containers = "1" ] ; then
+    echo "MySQL is already running:"
+    docker ps --filter "name=mysql"
+
+    echo "You can stop it by executing \"docker stop mysql\""
+
+    exit 0
+fi
+
+# Doing the same kind of check but with "-a", to check if the container exists.
+number_of_running_containers=$(docker ps -a --filter "name=mysql" | grep -w "mysql" | wc -l)
+
+if [ $number_of_running_containers = "1" ] ; then
+        echo "Container exists."
+else
+        echo "Container does not exist yet, creating it..."
+        docker create \
+                --name=mysql \
+                --env MYSQL_ROOT_PASSWORD=root \
+                --publish 3306:3306 \
+                --volume=/var/tmp/mysql_docker_data:/var/lib/mysql \
+                mysql:5.7
+fi
+
+echo "Starting MySQL..."
+docker start mysql
+
+sleep 0.5
+
+number_of_running_containers=$(docker ps --filter "name=mysql" | wc -l)
+
+if [ $number_of_running_containers = "1" ] ; then
+        echo "/!\ Seems like the container did not start."
+        echo "Last logs:"
+
+        docker logs mysql --since=2s
+fi
