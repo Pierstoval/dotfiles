@@ -7,27 +7,36 @@ echo "what you are doing!"
 
 if [[ $(which git) == "" ]]
 then
-    sudo apt install git
+    sudo apt-get -y install git
 fi
 
-git clone git@github.com:Pierstoval/dotfiles.git ~/dotfiles
+git clone https://github.com/Pierstoval/dotfiles "${HOME}/dotfiles"
 
-mkdir -p ~/bin
+# Bash
+if [[ "${SHELL}" == "/bin/bash" ]]; then
+  # Create bashrc if it does not exist
+  [[ -f "${HOME}/.bashrc" ]] || touch "${HOME}/.bashrc"
 
-# Create bashrc if not exists
-[[ -f ~/.bashrc ]] || touch ~/.bashrc
+  # Add source bash_aliases if not present in bashrc
+  (cat "${HOME}/.bashrc" | grep "bash_aliases") > /dev/null 2>&1 || echo "source ${HOME}/.bash_aliases" >> "${HOME}/.bashrc"
 
-# Add source bash_aliases if not present in bashrc
-(cat ~/.bashrc | grep "bash_aliases") > /dev/null 2>&1 || echo "source ~/.bash_aliases" >> ~/.bashrc
+  echo "source ./post-shell-start.bash" >> "${HOME}/.bashrc"
+fi
 
-# Copy dotfiles
-cp -r ~/dotfiles/dotfiles/.* ~/
-cp -r ~/dotfiles/bin/* ~/bin/
-sudo cp -r ~/dotfiles/etc/* /etc/
+# Zsh
+if [[ "${SHELL}" == "/usr/bin/zsh" ]]; then
+  if [[ ! -f "${HOME}/.zshrc" ]]; then
+      touch "${HOME}/.zshrc"
+  fi
+  echo "source ./post-shell-start.bash" >> "${HOME}/.zshrc"
+fi
+
+# Copy dotfiles
+cp -r "${HOME}/dotfiles/dotfiles/.*" "${HOME}/"
+cp -r "${HOME}/dotfiles/bin/*" "${HOME}/bin/"
 
 echo "------------------------------"
 echo "Finished!"
 echo ""
 echo "Now you should load config file in current environment by executing this command:"
 echo "source ~/.bash_aliases"
-

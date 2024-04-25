@@ -1,6 +1,6 @@
 
-# You can also add the following aliases to your bash file
-# either ~/.bashrc, ~/.bash_aliases or ~/.bash_profile depending on your envionment
+# You can also add the following aliases to your bash file,
+# either ~/.bashrc or ~/.bash_profile depending on your envionment
 # (for Windows, you'll have to create ".bat" or ".cmd" files in your %PATH%)
 
 # alias gst="git st"
@@ -23,11 +23,20 @@
 [color]
     # Enable colors for all output from git
     # Useful when you have to view diffs or status
-    ui = always
+	ui = true
 
 [push]
     # Avoid writing "-u" everytime you push, it will set the upstream if no refspec is given
     default = current
+
+[help]
+    # Available with Git >= 2.34.
+    # Will ask you for auto correction if you make a typo when writing a Git command.
+	autocorrect = prompt
+
+[rerere]
+    # Allows Reusing Recorded Resolutions, to memorize how conflicts were resolved and improve resolving later on.
+    enabled = true
 
 [core]
     # Automatically adds the user-related .gitignore file globally
@@ -39,16 +48,20 @@
     whitespace = trailing-space
 
     # Force the index to use "LF" line endings.
-    autocrlf = input
+	autocrlf = input
 
     # Change the line ending style for the working directory
-    eol = lf
+	eol = lf
 
     # Forces the Git pager to quit when the datas are not higher than the terminal.
     # For small logs, it will simply display it in the terminal,
     #   and for high logs, it will send it to `less` and use its console pagination system.
     # This prevents wrong `less` implementations to override this cool behavior
     pager = less -X -F
+#    pager = diff-so-fancy | less --tabs=4 -RFX
+
+[branch]
+	sort = committerdate
 
 [alias]
     # Shortcuts for some actions
@@ -57,9 +70,12 @@
     cm = commit
     l = log
     st = status
-    sw = switch                # Alternative to "checkout", Git 2.27+ needed
+    psuh = push
+    pshu = push
+    phus = push
 
     # Tools to save time
+    sw = switch                # Alternative to "checkout", Git 2.27+ needed
     f = fetch --all            # Fetches all your repositories.
     fp = fetch --all --prune   # Fetches all your repositories and removes refs that do not exist anymore remotely.
     b = branch -a --column     # List all branches in columns for more readability. Git 1.7.11 at least.
@@ -82,7 +98,7 @@
     log-commits = log --pretty=format:'[%h] %s'
 
     # Shows a beautiful tree of the current branch
-    tree = log --graph --pretty=format:'%Cred%h%Creset %C(yellow)%d%Creset %s'
+    tree = log --graph --pretty=format:'%Cred%h%Cgreen (%ci)%Creset -%C(yellow)%d%Creset %s  %C(bold blue)<%an>%Creset'
 
     # A beautiful graph to show the repository tree with all remotes and branches
     graph = log --all --color=always --graph --pretty=format:'%Cred%h%Cgreen (%ci)%Creset -%C(yellow)%d%Creset %s  %C(bold blue)<%an>%Creset'
@@ -91,3 +107,20 @@
     # With this command, git automatically removes any orphan blob in the .git/ directory.
     # Tested and approved! For a very often rebased repo, turned it from 4.8GB to 350MB... 😉
     gcall = -c gc.reflogExpire=0 -c gc.reflogExpireUnreachable=0 -c gc.rerereresolved=0 -c gc.rerereunresolved=0 -c gc.pruneExpire=now gc --aggressive
+
+    # A better-looking Git reflog with dates
+    rl = reflog --format='%C(auto)%h %<|(20)%gd %C(blue)%ci%C(reset) %gs (%s)'
+
+    # A nice tool to generate a changelog between versions.
+    # Like this, for example:
+    # $ git changelog v0.1.2..master
+    # Will generate a markdown-compatible changelog of all commits from v0.1.2 to master.
+    # @link https://coderwall.com/p/ch-wew/git-alias-to-generate-the-changelog
+    changelog = "!f() { r=${1:-`git describe --tags --abbrev=0`..HEAD}; echo Changelog for $r; git log --reverse --no-merges --format='* %s' $r; }; f"
+
+# In case "lfs" is installed
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f

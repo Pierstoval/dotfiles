@@ -2,14 +2,33 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
+# This one allows you to have a ".localdev" directory that no one uses
+# Pretty cool to store internal files (like database exports, scripts, etc.),
+# in all projects, since this ignore is global
+.localdev
+
 # User-specific stuff
 .idea
+.jekyll-cache
+.gitlab-ci-local
+.vs/
+*.vcxproj*
+*.vcxproj
+.vcxproj*
+.vcxproj
 .svn
 .composer
 .php_cs.cache
+.php-cs-fixer.cache
+*.iml
+yarn-error.log
+.pid
+
+.phpunit.result.cache
 
 # Microsoft Office
 ~$*
+.~*
 
 # CMake
 cmake-build-debug/

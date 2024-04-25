@@ -1,5 +1,4 @@
 " Plugins to install:
-" git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 set hidden
 set nocompatible              " be iMproved, required
@@ -27,4 +26,3 @@ hi Normal ctermbg=none
 
 " Enable highlight for search terms
 set hlsearch
-

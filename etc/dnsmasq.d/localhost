@@ -1,0 +1,2 @@
+# Everything pointing to *.localhost will be resolved to localhost
+address=/localhost/127.0.0.1

@@ -1,7 +1,7 @@
 @echo off
 
 set PROGRAM_NAME=vcxsrv.exe
-set PROGRAM_FULLPATH=C:\Program^ Files\VcXsrv\%PROGRAM_NAME%
+set PROGRAM_FULLPATH=C:\Users\Pierstoval\scoop\shims\%PROGRAM_NAME%
 
 tasklist.exe /FI "IMAGENAME eq %PROGRAM_NAME%" 2>NUL | C:\Windows\System32\find.exe /I /N "%PROGRAM_NAME%">NUL
 IF "%ERRORLEVEL%"=="0" (

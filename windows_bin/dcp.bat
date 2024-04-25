@@ -1,2 +1,2 @@
 @echo OFF
-docker-compose %*
+docker compose %*
