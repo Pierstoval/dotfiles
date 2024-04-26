@@ -20,7 +20,7 @@ if [[ "${SHELL}" == "/bin/bash" ]]; then
   # Add source bash_aliases if not present in bashrc
   (cat "${HOME}/.bashrc" | grep "bash_aliases") > /dev/null 2>&1 || echo "source ${HOME}/.bash_aliases" >> "${HOME}/.bashrc"
 
-  echo "source ./post-shell-start.bash" >> "${HOME}/.bashrc"
+  (cat "${HOME}/.bashrc" | grep "bash_aliases") > /dev/null 2>&1 || echo "source ./post-shell-start.bash" >> "${HOME}/.bashrc"
 fi
 
 # Zsh
@@ -28,12 +28,13 @@ if [[ "${SHELL}" == "/usr/bin/zsh" ]]; then
   if [[ ! -f "${HOME}/.zshrc" ]]; then
       touch "${HOME}/.zshrc"
   fi
-  echo "source ./post-shell-start.bash" >> "${HOME}/.zshrc"
+  (cat "${HOME}/.bashrc" | grep "bash_aliases") > /dev/null 2>&1 || echo "source ./post-shell-start.bash" >> "${HOME}/.zshrc"
 fi
 
 # Copy dotfiles
-cp -r "${HOME}/dotfiles/dotfiles/.*" "${HOME}/"
-cp -r "${HOME}/dotfiles/bin/*" "${HOME}/bin/"
+cp -r "${HOME}"/dotfiles/dotfiles/* "${HOME}/"
+cp -r "${HOME}"/dotfiles/dotfiles/.* "${HOME}/"
+cp -r "${HOME}"/dotfiles/bin/* "${HOME}/bin/"
 
 echo "------------------------------"
 echo "Finished!"
