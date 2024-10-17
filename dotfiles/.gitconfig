@@ -14,6 +14,15 @@
     name = Alex Rock Ancelet
     signingkey = XXXXXXXXXXXXXXXX
 
+[pull]
+    autostash = true
+
+[rebase]
+    autostash = true
+
+[merge]
+    autostash = true
+
 [tag]
     gpgsign = true
 
@@ -58,6 +67,8 @@
     #   and for high logs, it will send it to `less` and use its console pagination system.
     # This prevents wrong `less` implementations to override this cool behavior
     pager = less -X -F
+
+    rerere = true
 #    pager = diff-so-fancy | less --tabs=4 -RFX
 
 [branch]

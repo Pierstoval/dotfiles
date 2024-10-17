@@ -8,6 +8,7 @@
 .localdev
 
 # User-specific stuff
+*.profraw # grcov test reports
 .idea
 .jekyll-cache
 .gitlab-ci-local
@@ -23,8 +24,25 @@
 *.iml
 yarn-error.log
 .pid
-
+.this_is_ignored
+.local_files
 .phpunit.result.cache
+
+# Draw.io
+*.bkp
+
+# LibreOffice
+*:Zone.Identifier
+*Zone.Identifier
+
+# Yarn 2+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # Microsoft Office
 ~$*
