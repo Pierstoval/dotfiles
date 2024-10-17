@@ -12,7 +12,7 @@
 [user]
     email = pierstoval@gmail.com
     name = Alex Rock Ancelet
-    signingkey = 88A74A3BC09636A2
+    signingkey = XXXXXXXXXXXXXXXX
 
 [tag]
     gpgsign = true
