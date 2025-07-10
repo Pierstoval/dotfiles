@@ -101,7 +101,6 @@ export MAILTO=pierstoval+prod@gmail.com
 export LANG=fr_FR.utf8
 export LC_ALL=$LANG
 
-# For Symfony CLI to be in the PATH by default.
 export PATH="${PATH}:${HOME}/.symfony/bin/"
 export PATH="${PATH}:${HOME}/.cargo/bin"
 export PATH="${PATH}:${HOME}/.local/bin"
@@ -113,6 +112,9 @@ export PATH="${PATH}:${HOME}/.rvm/bin"
 # Load custom bin directory because it contains cool stuff & personal binaries
 export PATH="${PATH}:${HOME}/bin/"
 mkdir -p ~/bin
+
+# In case Jetbrains Toolbox creates scripts
+export PATH="${PATH}:${HOME}/.local/share/JetBrains/Toolbox/scripts/"
 
 # In case Deno is installed
 export DENO_INSTALL="${HOME}/.deno"
@@ -155,6 +157,8 @@ if [[ -d "~/www" ]]; then
     alias ww="cd ~/www"
 elif [[ -d "/var/www" ]]; then
     alias ww="cd /var/www"
+elif [[ -d "${HOME}/work" ]]; then
+    alias ww="cd ${HOME}/work"
 else
     alias ww='echo "No \"www\" directory found"'
 fi
